@@ -141,8 +141,6 @@ input:checked + .slider:before { transform:translateX(20px); }
       <a href="index.php?page=Conge" ><i class="fa fa-calendar"></i> Congés</a>
       <a href="index.php?page=affiche"><i class="fa fa-calendar-check"></i> Liste Congés</a>
       <a href="index.php?page=update_hr"><i class="fa fa-money-bill"></i> Salaires</a>
-     
-      <a href="index.php?page=update_control "><i class="fa fa-sliders"></i> Contrôle</a>
       <a href="index.php?page=evaluations"><i class="fa fa-clipboard-check"></i> Évaluations</a>
       <a href="index.php?page=promotions" ><i class="fa fa-chart-line"></i>Promotions</a>
       <a href="index.php?page=stats"><i class="fa fa-chart-bar"></i> Statistiques</a>
@@ -200,7 +198,6 @@ input:checked + .slider:before { transform:translateX(20px); }
       <a href="index.php?page=Conge"  class="card"><i class="fa fa-calendar"></i><h3>Congés</h3><p>Suivi des demandes de congés</p></a>
       <a href="index.php?page=affiche" class="card"><i class="fa fa-calendar-check"></i><h3>Liste Congés</h3><p>Affiche les congés</p></a>
       <a href="index.php?page=update_hr" class="card"><i class="fa fa-money-bill"></i><h3>Salaires</h3><p>Gestion des salaires et primes</p></a>
-      <a href="index.php?page=update_control" class="card"><i class="fa fa-sliders"></i><h3>Contrôle</h3><p>Suivi et ajustements RH</p></a>
       <a href="index.php?page=evaluations" class="card"><i class="fa fa-clipboard-check"></i><h3>Évaluations</h3><p>Suivi des évaluations des employés</p></a> <!-- ✅ AJOUT -->
       <a href="index.php?page=stats" class="card"><i class="fa fa-chart-bar"></i><h3>Statistiques</h3><p>Rapports et analyses RH</p></a>
       <a href="index.php?page=users" class="card"><i class="fa fa-users"></i><h3>Users</h3><p>Gestion des utilisateurs</p></a>

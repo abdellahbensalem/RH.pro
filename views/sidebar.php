@@ -155,8 +155,7 @@ input:checked + .slider:before { transform:translateX(20px); }
       <a href="index.php?page=Conge" class="<?= ($currentPage==='Conge')?'active':'' ?>"><i class="fa fa-calendar"></i> Congés</a>
       <a href="index.php?page=affiche" class="<?= ($currentPage==='affiche')?'active':'' ?>"><i class="fa fa-calendar-check"></i> Liste Congés</a>
       <a href="index.php?page=update_hr" class="<?= ($currentPage==='update_hr')?'active':'' ?>"><i class="fa fa-money-bill"></i> Salaires</a>
-      <a href="index.php?page=SettingsHR" class="<?= ($currentPage==='SettingsHR')?'active':'' ?>"><i class="fa fa-cogs"></i> Règles RH</a>
-      <a href="index.php?page=update_control" class="<?= ($currentPage==='update_control')?'active':'' ?>"><i class="fa fa-sliders"></i> Contrôle</a>
+
       <a href="index.php?page=evaluations" class="<?= ($currentPage==='evaluations')?'active':'' ?>"><i class="fa fa-clipboard-check"></i> Évaluations</a>
       <a href="index.php?page=promotions" class="<?= ($currentPage==='promotions')?'active':'' ?>"><i class="fa fa-chart-line"></i> Promotions</a>
       <a href="index.php?page=stats" class="<?= ($currentPage==='stats')?'active':'' ?>"><i class="fa fa-chart-bar"></i> Statistiques</a>
