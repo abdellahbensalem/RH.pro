@@ -79,6 +79,12 @@ body.dark .table th { background:#0d4b5a; }
 
 <div class="container">
   <h2>📊 Dashboard Statistiques RH</h2>
+  <div style="text-align:center; margin-bottom:20px;">
+    <a href="excel/export_stats_excel.php" class="btn btn-success">
+        📥 Exporter en Excel
+    </a>
+</div>
+
 
   <!-- CARDS PRINCIPALES -->
   <div class="cards">
