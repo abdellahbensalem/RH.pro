@@ -147,6 +147,7 @@ input:checked + .slider:before { transform:translateX(20px); }
       <a href="index.php?page=retraites"><i class="fa fa-user-clock"></i> Retraites</a>
       <a href="index.php?page=absences"><i class="fa fa-user-times"></i> absences</a>
       <a href="index.php?page=fonctions" ><i class="fa fa-briefcase"></i>Fonctions</a>
+       <a href="index.php?page=departements" ><i class="fa fa-building"></i>Départements</a>
       <a href="index.php?page=users"><i class="fa fa-users"></i> Users</a>
       <a href="index.php?page=settings"><i class="fa fa-cog"></i> Paramètres</a>
     <?php else: ?>
@@ -204,6 +205,7 @@ input:checked + .slider:before { transform:translateX(20px); }
       <a href="index.php?page=promotions" class="card"><i class="fa fa-chart-line"></i><h3>Promotions</h3><p>Historique et gestion des promotions</p></a>
       <a href="index.php?page=retraites" class="card"><i class="fa fa-user-clock"></i><h3>Retraites</h3><p>Suivi des départs automatiques</p></a>
       <a href="index.php?page=absences" class="card"><i class="fa fa-user-times"></i><h3>Absences</h3><p>Gestion des absences des employés</p></a>
+      <a href="index.php?page=departements" class="card"><i class="fa fa-building"></i><h3>Départements</h3><p>Gérer les départements et visualiser les employés rattachés</p></a>
       <a href="index.php?page=fonctions" class="card"><i class="fa fa-briefcase"></i><h3>Fonctions</h3><p>Gestion des fonctions et grades</p></a>
       <a href="index.php?page=settings"class="card"><i class="fa fa-cog"></i><h3>Paramètres</h3><p>Gestion des Paramètres</p></a>
       <?php else: ?>

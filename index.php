@@ -20,6 +20,8 @@ require_once "controllers/PromotionController.php";
 require_once "controllers/AutoRetraiteController.php"; 
 require_once "controllers/AbsenceController.php"; 
 require_once "controllers/FonctionController.php";
+require_once "controllers/DepartementController.php";
+
 
 // 🔹 Déterminer le rôle de l'utilisateur (ou guest si non connecté)
 $role = $_SESSION['user']['role'] ?? 'guest';
@@ -29,7 +31,7 @@ if (isset($_SESSION['user']['id'])) {
 
 // 🔹 Pages autorisées selon rôle
 $pages_autorisees = [
-    'admin' => ['dashboard','employees','affiche','update_hr','conge','update_control','stats','users','settings','settingshr','evaluations','promotions','promotions_auto','retraites','absences','fonctions','register','login'],
+    'admin' => ['dashboard','employees','affiche','departements','update_hr','conge','update_control','stats','users','settings','settingshr','evaluations','promotions','promotions_auto','retraites','absences','fonctions','register','login'],
     'employee' => ['dashboard','absences','conge','affiche','settings','login'],
     'guest' => ['login','register'] // visiteurs non connectés
 ];
@@ -65,6 +67,10 @@ switch ($page) {
     case 'affiche':
         (new AfficheController($PDO))->index();
         break;
+        case 'departements':
+    (new DepartementController($PDO))->index();
+    break;
+
 
     case 'update_hr':
         (new UpdateHRController($PDO))->index();
