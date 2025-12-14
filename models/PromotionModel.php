@@ -63,58 +63,95 @@ class PromotionModel {
         return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }
 
- public function applyAutomaticPromotions(): void {
+public function applyAutomaticPromotions(): void {
     try {
-        // 1️⃣ Récupérer les employés éligibles à une promotion
+
+        // 1️⃣ Sélection des employés éligibles (3 ans sans promotion)
         $sql = "
-            SELECT e.id, e.nom, e.prenom, e.poste, e.fonction_id, e.date_embauche, e.date_promotion, e.salaire
+            SELECT 
+                e.id, e.nom, e.prenom, e.poste,
+                e.fonction_id, e.date_embauche, e.date_promotion
             FROM employees e
             WHERE e.statut = 'Actif'
+              AND e.fonction_id IS NOT NULL
               AND (
-                  (e.date_promotion IS NULL AND DATEDIFF(NOW(), e.date_embauche) >= 1095)
-                  OR (e.date_promotion IS NOT NULL AND DATEDIFF(NOW(), e.date_promotion) >= 1095)
+                    (e.date_promotion IS NULL AND DATEDIFF(NOW(), e.date_embauche) >= 1095)
+                 OR (e.date_promotion IS NOT NULL AND DATEDIFF(NOW(), e.date_promotion) >= 1095)
               )
         ";
         $stmt = $this->pdo->query($sql);
-        $eligibleEmployees = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        foreach ($eligibleEmployees as $emp) {
-            if (!$emp['fonction_id']) continue;
+        foreach ($employees as $emp) {
 
-            // 2️⃣ Récupérer les infos de la fonction actuelle
-            $stmt = $this->pdo->prepare("SELECT id, Catégorie, Section, nom_fonction, salaire_base FROM fonctions WHERE id = ?");
+            /* 🔒 2️⃣ Sécurité anti-doublon
+               → empêche plusieurs promotions automatiques le même jour */
+            $stmt = $this->pdo->prepare("
+                SELECT COUNT(*) 
+                FROM promotions
+                WHERE employee_id = ?
+                  AND DATE(date_promotion) = CURDATE()
+                  AND motif LIKE '%automatique%'
+            ");
+            $stmt->execute([$emp['id']]);
+
+            if ($stmt->fetchColumn() > 0) {
+                continue; // déjà promu aujourd’hui
+            }
+
+            // 3️⃣ Récupérer la fonction actuelle
+            $stmt = $this->pdo->prepare("
+                SELECT id, Catégorie, Section, nom_fonction, salaire_base
+                FROM fonctions
+                WHERE id = ?
+            ");
             $stmt->execute([$emp['fonction_id']]);
             $currentFunction = $stmt->fetch(PDO::FETCH_ASSOC);
-            if (!$currentFunction) continue;
 
-            // 3️⃣ Chercher la prochaine Section dans la même Catégorie
+            if (!$currentFunction) {
+                continue;
+            }
+
+            // 4️⃣ Trouver la prochaine Section dans la même Catégorie
             $stmt = $this->pdo->prepare("
-                SELECT id, nom_fonction, Section, salaire_base 
-                FROM fonctions 
-                WHERE Catégorie = ? AND Section > ? 
-                ORDER BY Section ASC 
+                SELECT id, nom_fonction, Section, salaire_base
+                FROM fonctions
+                WHERE Catégorie = ?
+                  AND Section > ?
+                ORDER BY Section ASC
                 LIMIT 1
             ");
-            $stmt->execute([$currentFunction['Catégorie'], $currentFunction['Section']]);
+            $stmt->execute([
+                $currentFunction['Catégorie'],
+                $currentFunction['Section']
+            ]);
             $nextFunction = $stmt->fetch(PDO::FETCH_ASSOC);
-            if (!$nextFunction) continue; // Pas de promotion possible
 
-            // 4️⃣ Insérer la promotion dans la table promotions
+            if (!$nextFunction) {
+                continue; // Dernière section → pas de promotion
+            }
+
+            // 5️⃣ Insérer la promotion (historique)
             $stmt = $this->pdo->prepare("
-                INSERT INTO promotions (employee_id, ancien_fonction_id, nouvelle_fonction_id, date_promotion, motif)
+                INSERT INTO promotions 
+                    (employee_id, ancien_fonction_id, nouvelle_fonction_id, date_promotion, motif)
                 VALUES (?, ?, ?, NOW(), ?)
             ");
             $stmt->execute([
                 $emp['id'],
-                $emp['fonction_id'],
+                $currentFunction['id'],
                 $nextFunction['id'],
                 'Promotion automatique basée sur Section après 3 ans'
             ]);
 
-            // 5️⃣ Mettre à jour la fonction, le poste et le salaire de l’employé
+            // 6️⃣ Mettre à jour l’employé
             $stmt = $this->pdo->prepare("
-                UPDATE employees 
-                SET fonction_id = ?, poste = ?, salaire = ?, date_promotion = NOW()
+                UPDATE employees
+                SET 
+                    fonction_id = ?,
+                    poste = ?,
+                    salaire = ?,
+                    date_promotion = NOW()
                 WHERE id = ?
             ");
             $stmt->execute([
@@ -126,9 +163,10 @@ class PromotionModel {
         }
 
     } catch (Exception $e) {
-        error_log("Erreur applyAutomaticPromotions: " . $e->getMessage());
+        error_log('Erreur promotion automatique : ' . $e->getMessage());
     }
 }
+
 
 }
 ?>
