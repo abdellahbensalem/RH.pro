@@ -135,7 +135,7 @@ input:checked + .slider:before { transform:translateX(20px); }
 
 <div class="sidebar" id="sidebar">
   <div>
-    <h2>📊 GRH</h2>
+    <h2>📊 SIRH</h2>
     <div class="user-info">
       <!-- ✅ Logo cliquable vers le dashboard -->
       <a href="index.php?page=dashboard" class="logo-link">
@@ -160,7 +160,7 @@ input:checked + .slider:before { transform:translateX(20px); }
       <a href="index.php?page=promotions" class="<?= ($currentPage==='promotions')?'active':'' ?>"><i class="fa fa-chart-line"></i> Promotions</a>
       <a href="index.php?page=stats" class="<?= ($currentPage==='stats')?'active':'' ?>"><i class="fa fa-chart-bar"></i> Statistiques</a>
       <a href="index.php?page=retraites" class="<?= ($currentPage==='retraites')?'active':'' ?>"><i class="fa fa-user-clock"></i> Retraites</a>
-       <a href="index.php?page=departements" class="<?= ($currentPage==='departements')?'active':'' ?>"><i class="fa fa-building"></i>Départements</a>
+       <a href="index.php?page=departements" class="<?= ($currentPage==='departements')?'active':'' ?>"><i class="fa fa-building"></i> Départements</a>
       <a href="index.php?page=fonctions" class="<?= ($currentPage==='fonctions')?'active':'' ?>"><i class="fa fa-briefcase"></i> Fonctions</a>
       <a href="index.php?page=absences" class="<?= ($currentPage==='absences')?'active':'' ?>"><i class="fa fa-user-times"></i> Absences</a>
       <a href="index.php?page=users" class="<?= ($currentPage==='users')?'active':'' ?>"><i class="fa fa-users"></i> Users</a>

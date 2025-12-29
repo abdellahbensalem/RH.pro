@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Connexion - GRH</title>
+  <title>Connexion - SIRH</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
       * {margin:0; padding:0; box-sizing:border-box;}
@@ -205,7 +205,7 @@
   <div class="login-box">
     <div class="logo">
       <img src="/GRH/images/logo.png" alt="Logo GRH" onerror="this.style.opacity=0.6;">
-      <h1>GRH</h1>
+      <h1>SIRH</h1>
       <span>Gestion des Ressources Humaines</span>
     </div>
 

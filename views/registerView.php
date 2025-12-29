@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Créer un compte - GRH</title>
+  <title>Créer un compte - SIRH</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body {
@@ -139,7 +139,7 @@
     <!-- ✅ Logo repris de login -->
     <div class="logo">
       <img src="/GRH/images/logo.png" alt="Logo GRH" onerror="this.style.opacity=0.6;">
-      <h1>GRH</h1>
+      <h1>SIRH</h1>
       <span>Gestion des Ressources Humaines</span>
     </div>
 

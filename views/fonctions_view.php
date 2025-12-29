@@ -7,8 +7,7 @@
 
 // Sécurité : si elles n’existent pas, on les initialise pour éviter les erreurs
 $search = $search ?? '';
-$page = $page ?? 1;
-$totalPages = $totalPages ?? 1;
+
 $fonctions = $fonctions ?? [];
 $done = $done ?? null;
 ?>
@@ -19,7 +18,7 @@ $done = $done ?? null;
 <title>Gestion des Fonctions</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <style>
-/* 🌈 Ton design conservé intégralement */
+
 body {
   font-family: 'Segoe UI', sans-serif;
   background: var(--bg);
@@ -76,6 +75,21 @@ table {
   width: 100%;
   border-collapse: collapse;
 }
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  white-space: nowrap;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
 th, td {
   border: 1px solid #ddd;
   padding: 10px;
@@ -150,8 +164,39 @@ body.dark {
   --row-alt: #252538;
   --input-bg: #333;
 }
+/* 🌙 Texte du tableau en mode sombre */
+body.dark table,
+body.dark th,
+body.dark td {
+    color: #eee !important;
+}
+
+/* Bordures en mode sombre */
+body.dark th,
+body.dark td {
+    border-color: #444;
+}
+
+/* Fond du header tableau en mode sombre */
+body.dark th {
+    background: #7d3c98;
+}
+
 </style>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css">
+
 </head>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
+
+
+
 <body>
 <div class="card">
   <h2>💼 Gestion des Fonctions</h2>
@@ -175,7 +220,9 @@ body.dark {
   </form>
 
   <!-- 📋 Tableau -->
-  <table>
+  <div class="table-wrapper">
+  <table id="fonctionsTable">
+
     <thead>
       <tr>
         <th>#</th>
@@ -214,17 +261,8 @@ body.dark {
       <?php endif; ?>
     </tbody>
   </table>
+</div>
 
-  <!-- 📄 Pagination -->
-  <?php if ($totalPages > 1): ?>
-  <div class="pagination">
-    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-      <a href="index.php?page=fonctions&p=<?= $i ?>&search=<?= urlencode($search) ?>" class="<?= $i == $page ? 'active' : '' ?>">
-        <?= $i ?>
-      </a>
-    <?php endfor; ?>
-  </div>
-  <?php endif; ?>
 
   <!-- ➕ Formulaire d'ajout / modification -->
   <form method="POST" action="index.php?page=fonctions&action=add" class="add-form mt-4">
@@ -255,6 +293,26 @@ document.addEventListener('DOMContentLoaded', () => {
   const theme = localStorage.getItem('theme') || 'light';
   if (theme === 'dark') document.body.classList.add('dark');
 });
+</script>
+<script>
+$('#fonctionsTable').DataTable({
+  pageLength: 10,
+  lengthMenu: [5, 10, 25, 50],
+  ordering: true,
+  searching: true,
+  dom: '<"d-flex justify-content-between mb-2"B>rtip',
+  buttons: [
+    {
+      extend: 'colvis',
+      text: '👁️ Colonnes',
+      className: 'btn btn-sm btn-outline-secondary'
+    }
+  ],
+  language: {
+    url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json"
+  }
+});
+
 </script>
 </body>
 </html>

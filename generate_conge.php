@@ -17,7 +17,7 @@ try {
     // 🔍 Récupération du congé + employé + type + fonction
     $sql = "SELECT 
                 c.*, 
-                e.nom, e.prenom, e.date_naissance, e.lieu_naissance, e.solde_conge,
+                e.الاسم, e.اللقب, e.date_naissance, e.lieu_naissance, e.solde_conge,
                 f.nom_fonction,
                 t.nom_type
             FROM conges c
@@ -38,7 +38,8 @@ try {
     $dateFin = new DateTime($data['date_fin']);
     $duree = $dateDebut->diff($dateFin)->days + 1;
     $dateReprise = (clone $dateFin)->modify('+1 day');
-    $soldeRestant = $data['solde_conge'] - $duree;
+    $soldeRestant = $data['solde_conge'];
+
 
     // Année du congé (ex: 2019/2020)
     $anneeConge = $dateDebut->format('Y') . "/" . $dateFin->format('Y');
@@ -131,7 +132,7 @@ try {
 <h3 class='subtitle'>{$nom_type_ar} {$anneeConge}</h3>
 
 <div class='section'>
-<p>تمنح إلى السيد(ة): <strong>{$data['nom']} {$data['prenom']}</strong></p>
+<p>تمنح إلى السيد(ة): <strong>{$data['الاسم']} {$data['اللقب']}</strong></p>
 <p>المولود(ة) في: <strong>{$data['date_naissance']}</strong> بـ <strong>{$data['lieu_naissance']}</strong></p>
 <p>الوظيفة: <strong>{$nom_fonction_ar}</strong></p>
 <p>طبيعة العطلة: <strong>{$nom_type_ar} {$anneeConge}</strong></p>
@@ -163,7 +164,7 @@ try {
 
     // 🖨️ Génération du PDF
     $mpdf->WriteHTML($html);
-    $mpdf->Output("سند_عطلة_{$data['nom']}_{$data['prenom']}.pdf", 'I');
+    $mpdf->Output("سند_عطلة_{$data['الاسم']}_{$data['اللقب']}.pdf", 'I');
 
 } catch (Exception $e) {
     die("Erreur : " . $e->getMessage());

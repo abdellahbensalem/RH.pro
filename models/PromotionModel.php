@@ -108,19 +108,25 @@ public function applyAutomaticPromotions(): void {
             $stmt->execute([$emp['fonction_id']]);
             $currentFunction = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if (!$currentFunction) {
-                continue;
-            }
+           if (!$currentFunction) {
+    continue;
+}
 
-            // 4️⃣ Trouver la prochaine Section dans la même Catégorie
-            $stmt = $this->pdo->prepare("
-                SELECT id, nom_fonction, Section, salaire_base
-                FROM fonctions
-                WHERE Catégorie = ?
-                  AND Section > ?
-                ORDER BY Section ASC
-                LIMIT 1
-            ");
+// ⛔ BLOQUER SI SECTION MAX ATTEINTE
+if ($currentFunction['Section'] >= 4) {
+    continue; // plafond atteint
+}
+
+// 4️⃣ Trouver la prochaine Section dans la même Catégorie
+$stmt = $this->pdo->prepare("
+    SELECT id, nom_fonction, Section, salaire_base
+    FROM fonctions
+    WHERE Catégorie = ?
+      AND Section > ?
+    ORDER BY Section ASC
+    LIMIT 1
+");
+
             $stmt->execute([
                 $currentFunction['Catégorie'],
                 $currentFunction['Section']

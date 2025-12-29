@@ -24,6 +24,10 @@ button:hover { background: #219150; }
 .return { display: block; width: 220px; margin: 20px auto; padding: 10px; text-align: center;
   background: #3498db; color: #fff; border-radius: 8px; text-decoration: none; }
 .return:hover { background: #2980b9; }
+body.dark { background:#1e1e2f; color:#f0f0f0; }
+body.dark .container { background:#2c2c2c; color:#f0f0f0; }
+body.dark .table th { background:#145173; }
+body.dark .return { background:#145173; }
 </style>
 </head>
 <body>
@@ -33,7 +37,6 @@ button:hover { background: #219150; }
     <p style="text-align:center;margin-bottom:20px;">
         <strong>Règles automatiques :</strong><br>
         - +3 % de salaire chaque année 💰<br>
-        - Promotion de niveau de fonction tous les 3 ans 🎓<br>
         - +2,5 jours de congés chaque mois 🏖
     </p>
 
@@ -51,9 +54,8 @@ button:hover { background: #219150; }
             <th>Nom & Prénom</th>
             <th>Fonction</th>
             <th>Section</th>
-            <th>Salaire</th>
-            <th>Solde Congés</th>
-            <th>Date d’embauche</th>
+            <th>Salaire actuel</th>
+            <th>Solde Congés actuel</th>
         </tr>
 
         <?php foreach ($employees as $emp): ?>
@@ -63,16 +65,25 @@ button:hover { background: #219150; }
             <td><?= htmlspecialchars($emp['Section']) ?></td>
             <td><?= htmlspecialchars($emp['salaire']) ?> DA</td>
             <td><?= htmlspecialchars($emp['solde_conge']) ?> jours</td>
-            <td><?= htmlspecialchars($emp['date_embauche']) ?></td>
         </tr>
         <?php endforeach; ?>
     </table>
 
     <a class="return" href="index.php?page=dashboard">⬅ Retour au Dashboard</a>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const theme = localStorage.getItem('theme') || 'light';
+  if (theme === 'dark') document.body.classList.add('dark');
+});
+</script>
 </body>
 </html>
 </div>
+
+
+
 
 
 

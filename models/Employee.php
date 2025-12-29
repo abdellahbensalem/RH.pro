@@ -35,94 +35,154 @@ class Employee {
     }
 
     // 🔹 Ajouter un employé
-    public function add(array $data): bool {
-        $stmt = $this->pdo->prepare("
-            INSERT INTO employees 
-            (matricule, nom, prenom, date_naissance, lieu_naissance, sexe, situation_familiale, nombre_enfants,
-             adresse, email, telephone, poste, departement_id, salaire, solde_conge, statut, type_contrat, type_statut_contrat,
-             diplome, specialite_diplome, niveau_etudes, structure, categorie, section, echelon, superieur_hierarchique,
-             date_embauche, date_sortie, date_promotion)
-            VALUES 
-            (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ");
+public function add(array $data): bool {
+    $stmt = $this->pdo->prepare("
+        INSERT INTO employees (
+            matricule, nom, prenom, `الاسم`, `اللقب`,
+            date_naissance, lieu_naissance, sexe, situation_familiale, nombre_enfants,
+            adresse, email, telephone,
+            cni_numero, nif, numero_assurance, rib_ccp,
+            poste, fonction_id, departement_id,
+            salaire, solde_conge, statut,
+            type_contrat, type_statut_contrat,
+            diplome, specialite_diplome, niveau_etudes,
+            structure, categorie, section, echelon, superieur_hierarchique,
+            date_embauche, date_sortie, date_promotion, date_derniere_promotion
+        ) VALUES (
+            ?, ?, ?, ?, ?,
+            ?, ?, ?, ?, ?,
+            ?, ?, ?,
+            ?, ?, ?, ?,
+            ?, ?, ?,
+            ?, ?, ?,
+            ?, ?,
+            ?, ?, ?,
+            ?, ?, ?, ?, ?,
+            ?, ?, ?, ?
+        )
+    ");
 
-        return $stmt->execute([
-            $data['matricule'] ?? null,
-            $data['nom'] ?? null,
-            $data['prenom'] ?? null,
-            $data['date_naissance'] ?? null,
-            $data['lieu_naissance'] ?? null,
-            $data['sexe'] ?? null,
-            $data['situation_familiale'] ?? null,
-            $data['nombre_enfants'] ?? 0,
-            $data['adresse'] ?? null,
-            $data['email'] ?? null,
-            $data['telephone'] ?? null,
-            $data['poste'] ?? null,
-            $data['departement_id'] ?? null,
-            $data['salaire'] ?? 0,
-            $data['solde_conge'] ?? 0,
-            $data['statut'] ?? 'ACTIF',
-            $data['type_contrat'] ?? null,
-            $data['type_statut_contrat'] ?? null,
-            $data['diplome'] ?? null,
-            $data['specialite_diplome'] ?? null,
-            $data['niveau_etudes'] ?? null,
-            $data['structure'] ?? null,
-            $data['categorie'] ?? null,
-            $data['section'] ?? null,
-            $data['echelon'] ?? null,
-            $data['superieur_hierarchique'] ?? null,
-            $data['date_embauche'] ?? null,
-            $data['date_sortie'] ?? null,
-            $data['date_promotion'] ?? null
-        ]);
-    }
+    return $stmt->execute([
+        $data['matricule'] ?? null,
+        $data['nom'] ?? null,
+        $data['prenom'] ?? null,
+        $data['الاسم'] ?? null,
+        $data['اللقب'] ?? null,
+
+        $data['date_naissance'] ?? null,
+        $data['lieu_naissance'] ?? null,
+        $data['sexe'] ?? null,
+        $data['situation_familiale'] ?? null,
+        $data['nombre_enfants'] ?? 0,
+
+        $data['adresse'] ?? null,
+        $data['email'] ?? null,
+        $data['telephone'] ?? null,
+
+        $data['cni_numero'] ?? null,
+        $data['nif'] ?? null,
+        $data['numero_assurance'] ?? null,
+        $data['rib_ccp'] ?? null,
+
+        $data['poste'] ?? null,
+        $data['fonction_id'] ?? null,
+        $data['departement_id'] ?? null,
+
+        $data['salaire'] ?? 0,
+        $data['solde_conge'] ?? 0,
+        $data['statut'] ?? 'ACTIF',
+
+        $data['type_contrat'] ?? null,
+        $data['type_statut_contrat'] ?? null,
+
+        $data['diplome'] ?? null,
+        $data['specialite_diplome'] ?? null,
+        $data['niveau_etudes'] ?? null,
+
+        $data['structure'] ?? null,
+        $data['categorie'] ?? null,
+        $data['section'] ?? null,
+        $data['echelon'] ?? null,
+        $data['superieur_hierarchique'] ?? null,
+
+        $data['date_embauche'] ?? null,
+        $data['date_sortie'] ?? null,
+        $data['date_promotion'] ?? null,
+        $data['date_derniere_promotion'] ?? null
+    ]);
+}
+
 
     // 🔹 Modifier un employé
-    public function update(int $id, array $data): bool {
-        $stmt = $this->pdo->prepare("
-            UPDATE employees SET 
-                matricule=?, nom=?, prenom=?, date_naissance=?, lieu_naissance=?, sexe=?, situation_familiale=?, nombre_enfants=?,
-                adresse=?, email=?, telephone=?, poste=?, departement_id=?, salaire=?, solde_conge=?, statut=?, type_contrat=?, type_statut_contrat=?,
-                diplome=?, specialite_diplome=?, niveau_etudes=?, structure=?, categorie=?, section=?, echelon=?, superieur_hierarchique=?,
-                date_embauche=?, date_sortie=?, date_promotion=?
-            WHERE id=?
-        ");
+  public function update(int $id, array $data): bool {
+    $stmt = $this->pdo->prepare("
+        UPDATE employees SET
+            matricule=?, nom=?, prenom=?, `الاسم`=?, `اللقب`=?,
+            date_naissance=?, lieu_naissance=?, sexe=?, situation_familiale=?, nombre_enfants=?,
+            adresse=?, email=?, telephone=?,
+            cni_numero=?, nif=?, numero_assurance=?, rib_ccp=?,
+            poste=?, fonction_id=?, departement_id=?,
+            salaire=?, solde_conge=?, statut=?,
+            type_contrat=?, type_statut_contrat=?,
+            diplome=?, specialite_diplome=?, niveau_etudes=?,
+            structure=?, categorie=?, section=?, echelon=?, superieur_hierarchique=?,
+            date_embauche=?, date_sortie=?, date_promotion=?, date_derniere_promotion=?
+        WHERE id=?
+    ");
 
-        return $stmt->execute([
-            $data['matricule'] ?? null,
-            $data['nom'] ?? null,
-            $data['prenom'] ?? null,
-            $data['date_naissance'] ?? null,
-            $data['lieu_naissance'] ?? null,
-            $data['sexe'] ?? null,
-            $data['situation_familiale'] ?? null,
-            $data['nombre_enfants'] ?? 0,
-            $data['adresse'] ?? null,
-            $data['email'] ?? null,
-            $data['telephone'] ?? null,
-            $data['poste'] ?? null,
-            $data['departement_id'] ?? null,
-            $data['salaire'] ?? 0,
-            $data['solde_conge'] ?? 0,
-            $data['statut'] ?? 'ACTIF',
-            $data['type_contrat'] ?? null,
-            $data['type_statut_contrat'] ?? null,
-            $data['diplome'] ?? null,
-            $data['specialite_diplome'] ?? null,
-            $data['niveau_etudes'] ?? null,
-            $data['structure'] ?? null,
-            $data['categorie'] ?? null,
-            $data['section'] ?? null,
-            $data['echelon'] ?? null,
-            $data['superieur_hierarchique'] ?? null,
-            $data['date_embauche'] ?? null,
-            $data['date_sortie'] ?? null,
-            $data['date_promotion'] ?? null,
-            $id
-        ]);
-    }
+return $stmt->execute([
+    $data['matricule'] ?? null,
+    $data['nom'] ?? null,
+    $data['prenom'] ?? null,
+    $data['الاسم'] ?? null,
+    $data['اللقب'] ?? null,
+
+    $data['date_naissance'] ?? null,
+    $data['lieu_naissance'] ?? null,
+    $data['sexe'] ?? null,
+    $data['situation_familiale'] ?? null,
+    $data['nombre_enfants'] ?? 0,
+
+    $data['adresse'] ?? null,
+    $data['email'] ?? null,
+    $data['telephone'] ?? null,
+
+    $data['cni_numero'] ?? null,
+    $data['nif'] ?? null,
+    $data['numero_assurance'] ?? null,
+    $data['rib_ccp'] ?? null,
+
+    $data['poste'] ?? null,
+    $data['fonction_id'] ?? null,
+    $data['departement_id'] ?? null,
+
+    $data['salaire'] ?? 0,
+    $data['solde_conge'] ?? 0,
+    $data['statut'] ?? 'ACTIF',
+
+    $data['type_contrat'] ?? null,
+    $data['type_statut_contrat'] ?? null,
+
+    $data['diplome'] ?? null,
+    $data['specialite_diplome'] ?? null,
+    $data['niveau_etudes'] ?? null,
+
+    $data['structure'] ?? null,
+    $data['categorie'] ?? null,
+    $data['section'] ?? null,
+    $data['echelon'] ?? null,
+    $data['superieur_hierarchique'] ?? null,
+
+    $data['date_embauche'] ?? null,
+    $data['date_sortie'] ?? null,
+    $data['date_promotion'] ?? null,
+    $data['date_derniere_promotion'] ?? null,
+
+    $id
+]);
+
+}
+
 
     // 🔹 Supprimer un employé
     public function delete(int $id): bool {

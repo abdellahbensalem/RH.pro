@@ -169,11 +169,16 @@ body {
 <div class="card">
     <p>'.$text_intro.'</p>
     <p>
-        <b>'.$label_nom.' :</b> '.$emp["nom"].'<br>
-        <b>'.$label_prenom.' :</b> '.$emp["prenom"].'<br>
-        <b>'.$label_fonction.' :</b> '.($lang=='ar' ? ($fonction_ar[$emp["nom_fonction"]] ?? $emp["nom_fonction"]) : $emp["nom_fonction"]).'<br>
-        <b>'.$label_date.' :</b> '.$emp["date_embauche"].'
-    </p>
+    <b>'.$label_nom.' :</b> '.($lang=='ar' ? $emp["الاسم"] : $emp["nom"]).'<br>
+    <b>'.$label_prenom.' :</b> '.($lang=='ar' ? $emp["اللقب"] : $emp["prenom"]).'<br>
+    <b>'.$label_fonction.' :</b> '.(
+        $lang=='ar'
+        ? ($fonction_ar[$emp["nom_fonction"]] ?? $emp["nom_fonction"])
+        : $emp["nom_fonction"]
+    ).'<br>
+    <b>'.$label_date.' :</b> '.$emp["date_embauche"].'
+</p>
+
     <p>'.$text_final.'</p>
 ';
 

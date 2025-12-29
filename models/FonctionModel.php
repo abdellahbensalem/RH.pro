@@ -102,6 +102,11 @@ class FonctionModel {
         ";
         return $this->pdo->exec($sql);
     }
+    public function getAll() {
+    $stmt = $this->pdo->query("SELECT * FROM fonctions ORDER BY id DESC");
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 }
 ?>
 

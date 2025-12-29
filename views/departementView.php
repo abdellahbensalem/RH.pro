@@ -26,6 +26,7 @@
     .table-wrapper { max-width: 100%; overflow-x: auto; }
     .table-sticky thead th { position: sticky; top: 0;  ; z-index: 10; }
     table { white-space: nowrap; }
+    
   </style>
 </head>
 <body>

@@ -33,7 +33,7 @@
 .table-sticky thead th {
     position: sticky;
     top: 0;
-    background: #fff;
+    background: #2980b9;
     z-index: 10;
 }
 
@@ -42,8 +42,23 @@ table {
     white-space: nowrap;
 }
 </style>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- DataTables Bootstrap 5 -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css">
 
 </head>
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+<!-- DataTables Buttons -->
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
+
 <body>
 
 <?php include 'views/sidebar.php'; ?>
@@ -76,16 +91,18 @@ table {
 
     <div class="card">
       <div class="card-body table-responsive">
-        <table class="table table-bordered table-hover text-center">
+        <table id="employeesTable" class="table table-bordered table-hover text-center table-sticky">
+
           <thead>
             <tr>
-              <th>ID</th><th>Matricule</th><th>Nom</th><th>Prénom</th><th>Date Naissance</th><th>Lieu Naissance</th>
+              <th>ID</th><th>Matricule</th><th>Nom</th><th>Prénom</th><th>الاسم (AR)</th><th>اللقب (AR)</th><th>CNI</th>
+              <th>NIF</th><th>Assurance</th><th>RIB / CCP</th><th>Date Naissance</th><th>Lieu Naissance</th>
               <th>Sexe</th><th>Situation familiale</th><th>Enfants</th><th>Adresse</th>
               <th>Email</th><th>Téléphone</th><th>Poste</th><th>Département</th>
               <th>Salaire</th><th>Solde congé</th><th>Statut</th><th>Type contrat</th>
               <th>Type statut contrat</th><th>Diplôme</th><th>Spécialité</th><th>Niveau études</th>
               <th>Structure</th><th>Catégorie</th><th>Section</th><th>Échelon</th><th>Supérieur</th>
-              <th>Date embauche</th><th>Date sortie</th><th>Date promotion</th><th>Actions</th>
+              <th>Date embauche</th><th>Date sortie</th><th>Date promotion</th><th>Dernière promotion</th><th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -96,6 +113,12 @@ table {
                   <td><?= htmlspecialchars($emp['matricule']) ?></td>
                   <td><?= htmlspecialchars($emp['nom']) ?></td>
                   <td><?= htmlspecialchars($emp['prenom']) ?></td>
+                  <td><?= htmlspecialchars($emp['الاسم'] ?? '-') ?></td>
+                  <td><?= htmlspecialchars($emp['اللقب'] ?? '-') ?></td>
+                  <td><?= htmlspecialchars($emp['cni_numero'] ?? '-') ?></td>
+                  <td><?= htmlspecialchars($emp['nif'] ?? '-') ?></td>
+                  <td><?= htmlspecialchars($emp['numero_assurance'] ?? '-') ?></td>
+                  <td><?= htmlspecialchars($emp['rib_ccp'] ?? '-') ?></td>
                   <td><?= htmlspecialchars($emp['date_naissance'] ?? '-') ?></td>
                   <td><?= htmlspecialchars($emp['lieu_naissance'] ?? '-') ?></td>
                   <td><?= htmlspecialchars($emp['sexe'] ?? '-') ?></td>
@@ -122,6 +145,7 @@ table {
                   <td><?= htmlspecialchars($emp['date_embauche'] ?? '-') ?></td>
                   <td><?= htmlspecialchars($emp['date_sortie'] ?? '-') ?></td>
                   <td><?= htmlspecialchars($emp['date_promotion'] ?? '-') ?></td>
+                   <td><?= htmlspecialchars($emp['date_derniere_promotion'] ?? '-') ?></td>
   <td>
   <div class="btn-group">
     <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -154,7 +178,7 @@ table {
                </tr>
               <?php endforeach; ?>
             <?php else: ?>
-              <tr><td colspan="32" class="text-muted">Aucun employé trouvé.</td></tr>
+              <tr><td colspan="38" class="text-muted">Aucun employé trouvé.</td></tr>
             <?php endif; ?>
           </tbody>
         </table>
@@ -194,6 +218,41 @@ table {
                   <option value="Femme" <?= ($editing && $edit_employee['sexe']=='Femme')?'selected':'' ?>>Femme</option>
                 </select>
               </div>
+                 <div class="col-md-3">
+  <label class="form-label">الاسم (Ar)</label>
+  <input type="text" name="الاسم" class="form-control"
+    value="<?= $editing ? htmlspecialchars($edit_employee['الاسم'] ?? '') : '' ?>">
+</div>
+
+<div class="col-md-3">
+  <label class="form-label">اللقب (Ar)</label>
+  <input type="text" name="اللقب" class="form-control"
+    value="<?= $editing ? htmlspecialchars($edit_employee['اللقب'] ?? '') : '' ?>">
+</div>
+
+<div class="col-md-3">
+  <label class="form-label">CNI</label>
+  <input type="text" name="cni_numero" class="form-control"
+    value="<?= $editing ? htmlspecialchars($edit_employee['cni_numero'] ?? '') : '' ?>">
+</div>
+
+<div class="col-md-3">
+  <label class="form-label">NIF</label>
+  <input type="text" name="nif" class="form-control"
+    value="<?= $editing ? htmlspecialchars($edit_employee['nif'] ?? '') : '' ?>">
+</div>
+
+<div class="col-md-3">
+  <label class="form-label">N° Assurance</label>
+  <input type="text" name="numero_assurance" class="form-control"
+    value="<?= $editing ? htmlspecialchars($edit_employee['numero_assurance'] ?? '') : '' ?>">
+</div>
+
+<div class="col-md-3">
+  <label class="form-label">RIB / CCP</label>
+  <input type="text" name="rib_ccp" class="form-control"
+    value="<?= $editing ? htmlspecialchars($edit_employee['rib_ccp'] ?? '') : '' ?>">
+</div>
 
               <!-- Situation familiale & enfants -->
               <div class="col-md-3"><label class="form-label">Situation familiale</label>
@@ -349,6 +408,33 @@ table {
     modal.show();
   <?php endif; ?>
 </script>
+<script>
+$(document).ready(function () {
+  $('#employeesTable').DataTable({
+    pageLength: 10,
+    lengthMenu: [5, 10, 25, 50, 100],
+    ordering: true,
+    searching: false, // ✅ garder la recherche PHP
+    responsive: false,
+
+    dom: '<"d-flex justify-content-between mb-2"B>rtip',
+
+    buttons: [
+      {
+        extend: 'colvis',
+        text: '👁️ Colonnes visibles',
+        className: 'btn btn-outline-primary btn-sm'
+      }
+    ],
+
+    language: {
+      url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json"
+    }
+  });
+});
+</script>
+
+
 
 </body>
 </html>

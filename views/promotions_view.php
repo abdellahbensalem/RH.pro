@@ -29,6 +29,11 @@ th { background:#3498db; color:#fff; }
 tr:hover { background:#f1f1f1; }
 .add-form { background:#ecf0f1; padding:20px; border-radius:10px; margin-top:30px; }
 .auto-info { background:#e8f5e9; color:#2e7d32; padding:10px; border-radius:8px; margin-bottom:20px; text-align:center; font-weight:500; }
+ body.dark { background:#1f1f1f; color:#f0f0f0; }
+    body.dark .card, body.dark .modal-content { background:#2c2c2c; color:#f0f0f0; }
+    body.dark .table th { background:#145173; }
+    body.dark .btn-retour { background:#145173; }
+.return:hover { background: #2980b9; }
 </style>
 </head>
 <body>

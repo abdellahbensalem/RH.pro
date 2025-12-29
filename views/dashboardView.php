@@ -120,7 +120,7 @@ input:checked + .slider:before { transform:translateX(20px); }
 
 <div class="sidebar" id="sidebar">
   <div>
-    <h2>📊 GRH</h2>
+    <h2>📊 SIRH</h2>
     <div class="user-info">
      <a href="index.php?page=dashboard">
   <img src="/GRH/images/logo.png" alt="LOGO" onerror="this.style.opacity=0.6;">
@@ -146,8 +146,8 @@ input:checked + .slider:before { transform:translateX(20px); }
       <a href="index.php?page=stats"><i class="fa fa-chart-bar"></i> Statistiques</a>
       <a href="index.php?page=retraites"><i class="fa fa-user-clock"></i> Retraites</a>
       <a href="index.php?page=absences"><i class="fa fa-user-times"></i> absences</a>
-      <a href="index.php?page=fonctions" ><i class="fa fa-briefcase"></i>Fonctions</a>
-       <a href="index.php?page=departements" ><i class="fa fa-building"></i>Départements</a>
+      <a href="index.php?page=fonctions" ><i class="fa fa-briefcase"></i> Fonctions</a>
+       <a href="index.php?page=departements" ><i class="fa fa-building"></i> Départements</a>
       <a href="index.php?page=users"><i class="fa fa-users"></i> Users</a>
       <a href="index.php?page=settings"><i class="fa fa-cog"></i> Paramètres</a>
     <?php else: ?>

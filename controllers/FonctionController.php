@@ -9,13 +9,8 @@ class FonctionController {
     }
 
     public function index() {
-        // 🔍 Recherche + pagination
-        $search = $_GET['search'] ?? '';
-        $page = isset($_GET['p']) ? max(1, (int)$_GET['p']) : 1;
-        $perPage = 10;
-        $start = ($page - 1) * $perPage;
 
-        // 🧩 Actions spéciales
+        // 🔐 Actions spéciales
         if (isset($_GET['action'])) {
             switch ($_GET['action']) {
                 case 'autoAssign':
@@ -43,41 +38,35 @@ class FonctionController {
             exit;
         }
 
-        // ➕ Ajout ou modification
-     // ➕ Ajout ou modification
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // ➕ Ajout / modification
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $id = $_POST['id'] ?? '';
-    $nom = trim($_POST['nom_fonction']);
-    $salaire = (float)$_POST['salaire_base'];
-    $Catégorie = (int)$_POST['Catégorie'];
-    $Section = trim($_POST['Section']);
+            $id = $_POST['id'] ?? '';
+            $nom = trim($_POST['nom_fonction']);
+            $salaire = max(0, (float)$_POST['salaire_base']); // 🔒 pas négatif
+            $categorie = (int)$_POST['Catégorie'];
+            $section = trim($_POST['Section']);
 
-    if (!empty($id)) {
-        // Modifier
-        $this->model->update((int)$id, $nom, $salaire, $Catégorie, $Section);
-    } else {
-        // Ajouter
-        $this->model->add($nom, $salaire, $Catégorie, $Section);
-    }
+            if (!empty($id)) {
+                $this->model->update((int)$id, $nom, $salaire, $categorie, $section);
+            } else {
+                $this->model->add($nom, $salaire, $categorie, $section);
+            }
 
-    header("Location: index.php?page=fonctions");
-    exit;
-}
+            header("Location: index.php?page=fonctions");
+            exit;
+        }
 
+        // 📋 Récupération TOTALE (IMPORTANT)
+        $fonctions = $this->model->getAll();
 
-        // 📋 Récupération avec pagination
-        $fonctions = $this->model->getPaginated($search, $start, $perPage);
-        $total = $this->model->countAll($search);
-        $totalPages = ceil($total / $perPage);
-
-        // ✅ Variables envoyées à la vue
+        // ✅ Message
         $done = $_GET['done'] ?? null;
 
         require "views/fonctions_view.php";
     }
 }
-?>
+
 
 
 

@@ -29,6 +29,10 @@ th { background:#3498db;color:#fff; }
 .message { background:#f9f9f9;border-left:4px solid #3498db;padding:8px;margin:10px 0;border-radius:5px; }
 #formAdd { display:none;margin-top:15px; }
 input, select, textarea { padding:6px;width:100%;border:1px solid #ccc;border-radius:4px; }
+body.dark { background:#1f1f1f; color:#f0f0f0; }
+    body.dark .card, body.dark .modal-content { background:#2c2c2c; color:#f0f0f0; }
+    body.dark .table th { background:#145173; }
+    body.dark .btn-retour { background:#145173; }
 </style>
 
 <script>
@@ -146,6 +150,13 @@ function goBack() { window.location.href = "index.php?page=dashboard"; }
     <?php endif; ?>
   </table>
 </div>
+<script>
+// 🌙 Synchronisation avec le thème du dashboard
+document.addEventListener('DOMContentLoaded', () => {
+  const theme = localStorage.getItem('theme') || 'light';
+  if (theme === 'dark') document.body.classList.add('dark');
+});
+</script>
 </body>
 </html>
 
